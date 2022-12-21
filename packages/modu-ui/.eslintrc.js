@@ -18,5 +18,6 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "react/display-name": "off",
+    "@typescript-eslint/no-empty-function": "off",
   },
 };

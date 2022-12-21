@@ -3,6 +3,7 @@ import { UiBaseProps } from "../_types/common";
 import makeClassName from "../utils/makeClassNames";
 import "./styles/index.scss";
 
+type ButtonColorType = "ghost" | "primary" | "danger";
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     UiBaseProps {
@@ -11,6 +12,7 @@ export interface ButtonProps
   rightIcon?: ReactNode;
   round?: boolean;
   circle?: boolean;
+  color?: ButtonColorType;
 }
 
 const BUTTON_CLS_PREFIX = "button";
@@ -22,17 +24,24 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     rightIcon,
     round = false,
     circle = false,
+    color = "",
+    ...restProps
   } = props;
 
   const { componentCls, classNames } = makeClassName(BUTTON_CLS_PREFIX);
 
-  const buttonCls = classNames(
-    componentCls,
-    {
-      [`${componentCls}--round`]: round,
-      [`${componentCls}--circle`]: circle,
-    },
-    className
+  const buttonCls = useMemo(
+    () =>
+      classNames(
+        componentCls,
+        {
+          [`${componentCls}--round`]: round,
+          [`${componentCls}--circle`]: circle,
+          [`${componentCls}--${color}`]: color,
+        },
+        className
+      ),
+    [componentCls, round, circle, color, className]
   );
 
   const leftIconCls = useMemo(
@@ -54,7 +63,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     [rightIcon]
   );
   return (
-    <button className={buttonCls} ref={ref}>
+    <button ref={ref} className={buttonCls} {...restProps}>
       {leftIconElem}
       {children}
       {rightIconElem}
