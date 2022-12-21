@@ -1,8 +1,21 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import { ErrorBoundary } from "react-error-boundary";
+import Error from "../components/Error";
+import { Suspense } from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export interface PageCommonProps {
+  pagePath: string;
 }
 
-export default MyApp
+function MyApp({ Component, pageProps }: AppProps<PageCommonProps>) {
+  console.log(pageProps);
+  return (
+    <ErrorBoundary FallbackComponent={Error}>
+      <Suspense fallback={<div>loading....</div>}>
+        <Component {...pageProps} />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+export default MyApp;
