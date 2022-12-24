@@ -17,7 +17,9 @@ const LIST_CLS_PREFIX = "list";
 interface ListContextProps {
   onClickItem: (id: string) => void;
 }
-interface ListProps extends UiBaseProps, HTMLAttributes<HTMLUListElement> {
+export interface ListProps
+  extends UiBaseProps,
+    HTMLAttributes<HTMLUListElement> {
   headerElem?: ReactNode;
   borderLine?: boolean;
   children?: ReactNode;
