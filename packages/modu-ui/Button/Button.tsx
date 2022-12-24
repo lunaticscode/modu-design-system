@@ -4,6 +4,7 @@ import makeClassName from "../utils/makeClassNames";
 import "./styles/index.scss";
 
 type ButtonColorType = "ghost" | "primary" | "danger";
+type ButtonSizeType = "sm" | "md" | "lg";
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     UiBaseProps {
@@ -13,6 +14,7 @@ export interface ButtonProps
   round?: boolean;
   circle?: boolean;
   color?: ButtonColorType;
+  size?: ButtonSizeType;
 }
 
 const BUTTON_CLS_PREFIX = "button";
@@ -25,6 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
     round = false,
     circle = false,
     color = "",
+    size = "md",
     ...restProps
   } = props;
 
@@ -38,6 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
           [`${componentCls}--round`]: round,
           [`${componentCls}--circle`]: circle,
           [`${componentCls}--${color}`]: color,
+          [`${componentCls}--size-${size}`]: size,
         },
         className
       ),
